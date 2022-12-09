@@ -8,6 +8,7 @@ function StudentForm() {
             initialValues={{
                 first_name: "",
                 email: "",
+                phone_number:""
             }}
             onSubmit = {async(values, actions) => {
                 console.log(values);
@@ -31,6 +32,10 @@ function StudentForm() {
                     <label>Email</label>
                     <input type="text" name="email" placeholder='Write the email' 
                     onChange={handleChange} value={values.email} required
+                    />
+                    <label>Phone number</label>
+                    <input type="text" name="phone_number" placeholder='Write the phone number' 
+                    onChange={handleChange} value={values.phone_number} required
                     />
                     <button type='submit' disabled={isSubmitting}>
                         { isSubmitting ? "Saving..." : "Save" }
