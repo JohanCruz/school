@@ -116,7 +116,7 @@ function StudentsPage() {
                             {({handleChange, handleSubmit, values, isSubmitting}) => (
                                 <Form onSubmit={handleSubmit}>
 
-                                    <input type="text" name="email" placeholder='Write the email' 
+                                    <input type="email" name="email" placeholder='Write the email' 
                                         onChange={handleChange} value={values.email} required
                                         style={{width: "160px"}}
                                         />

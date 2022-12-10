@@ -17,4 +17,4 @@ en la ruta db\db.js
 
 - En la carpeta raíz correr npm run dev y en otro git bash también correr npm run dev
 
-######Video demostrativo [link](https://github.com/pandao/editor.md "Video")
+######Video demostrativo [link](https://drive.google.com/file/d/1tQuFTPiWADGTDM91q_tH0rixu-H22Eif/view?usp=share_link "Video")
