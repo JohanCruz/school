@@ -17,4 +17,4 @@ en la ruta db\db.js
 
 - En la carpeta raíz correr npm run dev y en otro git bash también correr npm run dev
 
-######Video demostrativo [link](https://drive.google.com/file/d/1tQuFTPiWADGTDM91q_tH0rixu-H22Eif/view?usp=share_link "Video")
+######Video demostración de funcionalidad y estructura del código fuente [link](https://drive.google.com/file/d/1_KLAb8KyFeMxIiCZG3i_Wiu1jLqTm7qz/view?usp=sharing "Video")

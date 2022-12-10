@@ -12,7 +12,6 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { MultiSelect } from "react-multi-select-component";
 
-import StudentForm  from "./StudentForm.jsx"
 
 
 function StudentsPage() {
