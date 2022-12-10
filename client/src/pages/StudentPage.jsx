@@ -31,7 +31,7 @@ function StudentPage() {
 
     return(
         <div>
-            <h1>{s_id }</h1>        
+            <h1>{s_id}</h1>        
         </div>
     )
     

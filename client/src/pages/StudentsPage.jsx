@@ -12,16 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { MultiSelect } from "react-multi-select-component";
 
-const customStyles = {
-    content: {
-      top: '50%',
-      left: '50%',
-      right: 'auto',
-      bottom: 'auto',
-      marginRight: '-50%',
-      transform: 'translate(-50%, -50%)',
-    },
-  };
+import StudentForm  from "./StudentForm.jsx"
 
 
 function StudentsPage() {
@@ -46,6 +37,7 @@ function StudentsPage() {
     }, [])
     return(
         <div>
+            {/* <StudentForm /> */}
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
@@ -53,13 +45,11 @@ function StudentsPage() {
                         <TableCell>Name</TableCell>
                         <TableCell>Email</TableCell>
                         <TableCell>Phone number</TableCell>
-                        <TableCell>Group</TableCell>
-                        
-                        
                         <TableCell align="left">Level id</TableCell>
-                        <TableCell align="left">Courses</TableCell>
+                        <TableCell>Group</TableCell> 
                         <TableCell align="left">Status</TableCell>
-
+                        <TableCell align="left">Courses</TableCell>
+                        <TableCell align="left">Credits</TableCell>
 
                     </TableRow>
                     </TableHead>
@@ -161,7 +151,7 @@ function StudentsPage() {
 
                                     <input type="text" name="phone_number" placeholder='Write the phone number' 
                                         onChange={handleChange} value={values.phone_number} required
-                                        style={{width: "160px"}}
+                                        style={{width: "100px"}} 
                                         />
                                     <button type='submit' disabled={isSubmitting}>
                                         { isSubmitting ? "Saving..." : "💾" }
@@ -171,13 +161,114 @@ function StudentsPage() {
                             )}    
                         </Formik>
                             
-                        </TableCell>
-                        <TableCell align="left">{student.lv_id}</TableCell>
-                        <TableCell align="left">{student.group}</TableCell>
+                        </TableCell>                        
                         <TableCell align="left">
-                            <MultipleSelect courses={courses} student={student}/>
+                            <Formik
+                                initialValues={{
+                                    lv_id: student.lv_id
+                                }}
+                                onSubmit = {async(values, actions) => {
+                                    console.log(values);
+                                    try {
+                                        const response = await updateStudentRequest(values, student.s_id);
+                                        console.log(response)
+                                        
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                }
+                                }
+                            >
+                                {({handleChange, handleSubmit, values, isSubmitting}) => (
+                                    <Form onSubmit={handleSubmit}>
+
+                                        <input type="text" name="lv_id" placeholder='Level' 
+                                            onChange={handleChange} value={values.lv_id} required
+                                            style={{width: "40px"}} 
+                                            />
+                                        <button type='submit' disabled={isSubmitting}>
+                                            { isSubmitting ? "Saving..." : "💾" }
+                                        </button>
+
+                                    </Form>
+                                )}    
+                            </Formik>                           
+                            
                         </TableCell>
-                        <TableCell align="left">{ student.status == 1 ? "Activo🗸": "Inactivo🗙"}</TableCell>
+                        <TableCell align="left">
+
+                        <Formik
+                            initialValues={{
+                                group: student.group
+                            }}
+                            onSubmit = {async(values, actions) => {
+                                console.log(values);
+                                try {
+                                    const response = await updateStudentRequest(values, student.s_id);
+                                    console.log(response)
+                                    
+                                } catch (error) {
+                                    console.log(error);
+                                }
+                            }
+                            }
+                        >
+                            {({handleChange, handleSubmit, values, isSubmitting}) => (
+                                <Form onSubmit={handleSubmit}>
+
+                                    <input type="text" name="group" placeholder="Group" 
+                                        onChange={handleChange} value={values.group} required
+                                        style={{width: "30px"}} 
+                                    />
+                                    <button type='submit' disabled={isSubmitting}>
+                                        { isSubmitting ? "Saving..." : "💾" }
+                                    </button>
+
+                                </Form>
+                            )}    
+                        </Formik>
+
+                            
+                        </TableCell>
+                        <TableCell align="left">
+                            <Formik
+                                initialValues={{
+                                    status: student.status 
+                                }}
+                                onSubmit = {async(values, actions) => {
+                                    console.log(values);
+                                    try {
+                                        const status = student.status == 1 ? 0 : 1;  
+                                        const response = await updateStudentRequest({status: status.toString()}, student.s_id);
+                                        student.status = status
+                                        console.log(response)
+                                        
+                                    } catch (error) {
+                                        console.log(error);
+                                    }
+                                }
+                                }
+                            >
+                                {({handleChange, handleSubmit, values, isSubmitting}) => (
+                                    <Form onSubmit={handleSubmit}> 
+                                        <button type='submit' disabled={isSubmitting}>                                        
+                                        { student.status == 1 ? "Activo🗸": "Inactivo🗙"}                                        
+                                        </button>
+                                    </Form>
+                                )}    
+                            </Formik>                            
+                            
+                        </TableCell>
+                        <TableCell align="left" >
+                            <div style={{ width: 300 }}>
+                            <MultipleSelect courses={courses} student={student}/>
+                            </div>
+                            
+                        </TableCell>
+
+                        
+                        <TableCell align="left">{student.credits ? student.credits : ""}</TableCell> 
+                        
                         
                                  
                         </TableRow>
@@ -193,15 +284,9 @@ function StudentsPage() {
 export default StudentsPage
 
 
-const options = [
-    { label: "Grapes 🍇", value: "grapes" },
-    { label: "Mango 🥭", value: "mango" },
-    { label: "Strawberry 🍓", value: "strawberry", disabled: true },
-  ];
+const options = [];
   
-  const MultipleSelect = (props) => {
-    
-
+  const MultipleSelect = (props) => {   
 
     const op = props.courses
     const s_id = props.student.s_id
@@ -220,13 +305,8 @@ const options = [
         }
         
     }
-
-
-    console.log('s_c', s_c)
+    
     const [selected, setSelected] = useState(s_c);
-    
-    
-
     
   
     return (
@@ -263,6 +343,7 @@ const options = [
                         defaultValue={selected}
                         onChange={setSelected}
                         labelledBy="Select"
+                        style={{with: "100px"}}
                         />
                     <button type='submit'>
                         { "💾" }

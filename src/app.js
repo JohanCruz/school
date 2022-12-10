@@ -1,6 +1,7 @@
 import express from 'express'
 
-import studenstRoutes from './routes/students.routes.js'
+import studentsRoutes from './routes/students.routes.js'
+import coursesRoutes from './routes/courses.routes.js'
 import indexRoutes from './routes/index.routes.js'
 import cors from 'cors'
  
@@ -13,7 +14,8 @@ app.use(cors({
 app.use(express.json())
 
 app.use(indexRoutes)
-app.use('/api', studenstRoutes)
+app.use('/api', studentsRoutes)
+app.use('/api', coursesRoutes)
 
 
 app.use((req, res, next) => {
